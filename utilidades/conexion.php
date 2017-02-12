@@ -30,5 +30,14 @@
  * @author APRENDIZ
  */
 class conexion {
-	//put your code here
+	public static function getConexion(){
+		$con=null;
+		try{
+			$con = new PDO("mysql:host=localhost;dename=helirep", "root", "");
+			$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION, $con);
+		} catch (Exception $ex) {
+			echo 'ERROR: '.$ex->getMessage();
+		}
+		return $con;
+	}
 }
