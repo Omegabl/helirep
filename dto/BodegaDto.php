@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 APRENDIZ.
+ * Copyright 2017 Depurador.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,76 +25,43 @@
  */
 
 /**
- * Description of UsuarioDto
+ * Description of BodegaDto
  *
- * @author APRENDIZ
+ * @author Depurador
  */
-class UsuarioDto {
-	private $id_usuario=0, $fk_id_rol=0, $nombre="", $apellido="", $contrasena="", $documento="", $activo=1, $nombre_usuario="";
+class BodegaDto {
+	private $id_bodega, $fk_id_usuario, $direccion, $nombre;
 	
-	function getId_usuario() {
-		return $this->id_usuario;
+	function getId_bodega() {
+		return $this->id_bodega;
 	}
 
-	function getFk_id_rol() {
-		return $this->fk_id_rol;
+	function getFk_id_usuario() {
+		return $this->fk_id_usuario;
+	}
+
+	function getDireccion() {
+		return $this->direccion;
 	}
 
 	function getNombre() {
 		return $this->nombre;
 	}
 
-	function getApellido() {
-		return $this->apellido;
+	function setId_bodega($id_bodega) {
+		$this->id_bodega = $id_bodega;
 	}
 
-	function getContrasena() {
-		return $this->contrasena;
+	function setFk_id_usuario($fk_id_usuario) {
+		$this->fk_id_usuario = $fk_id_usuario;
 	}
 
-	function getDocumento() {
-		return $this->documento;
-	}
-
-	function getActivo() {
-		return $this->activo;
-	}
-
-	function getNombre_usuario() {
-		return $this->nombre_usuario;
-	}
-
-	function setId_usuario($id_usuario) {
-		$this->id_usuario = $id_usuario;
-	}
-
-	function setFk_id_rol($fk_id_rol) {
-		$this->fk_id_rol = $fk_id_rol;
+	function setDireccion($direccion) {
+		$this->direccion = $direccion;
 	}
 
 	function setNombre($nombre) {
 		$this->nombre = $nombre;
 	}
-
-	function setApellido($apellido) {
-		$this->apellido = $apellido;
-	}
-
-	function setContrasena($contrasena) {
-		$this->contrasena = $contrasena;
-	}
-
-	function setDocumento($documento) {
-		$this->documento = $documento;
-	}
-
-	function setActivo($activo) {
-		$this->activo = $activo;
-	}
-
-	function setNombre_usuario($nombre_usuario) {
-		$this->nombre_usuario = $nombre_usuario;
-	}
-
 
 }

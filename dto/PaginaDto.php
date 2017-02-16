@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 APRENDIZ.
+ * Copyright 2017 Depurador.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,76 +25,43 @@
  */
 
 /**
- * Description of UsuarioDto
+ * Description of PaginaDto
  *
- * @author APRENDIZ
+ * @author Depurador
  */
-class UsuarioDto {
-	private $id_usuario=0, $fk_id_rol=0, $nombre="", $apellido="", $contrasena="", $documento="", $activo=1, $nombre_usuario="";
+class PaginaDto {
+	private $id_pagina, $fk_id_menu, $nombre, $url;
 	
-	function getId_usuario() {
-		return $this->id_usuario;
+	function getId_pagina() {
+		return $this->id_pagina;
 	}
 
-	function getFk_id_rol() {
-		return $this->fk_id_rol;
+	function getFk_id_menu() {
+		return $this->fk_id_menu;
 	}
 
 	function getNombre() {
 		return $this->nombre;
 	}
 
-	function getApellido() {
-		return $this->apellido;
+	function getUrl() {
+		return $this->url;
 	}
 
-	function getContrasena() {
-		return $this->contrasena;
+	function setId_pagina($id_pagina) {
+		$this->id_pagina = $id_pagina;
 	}
 
-	function getDocumento() {
-		return $this->documento;
-	}
-
-	function getActivo() {
-		return $this->activo;
-	}
-
-	function getNombre_usuario() {
-		return $this->nombre_usuario;
-	}
-
-	function setId_usuario($id_usuario) {
-		$this->id_usuario = $id_usuario;
-	}
-
-	function setFk_id_rol($fk_id_rol) {
-		$this->fk_id_rol = $fk_id_rol;
+	function setFk_id_menu($fk_id_menu) {
+		$this->fk_id_menu = $fk_id_menu;
 	}
 
 	function setNombre($nombre) {
 		$this->nombre = $nombre;
 	}
 
-	function setApellido($apellido) {
-		$this->apellido = $apellido;
+	function setUrl($url) {
+		$this->url = $url;
 	}
-
-	function setContrasena($contrasena) {
-		$this->contrasena = $contrasena;
-	}
-
-	function setDocumento($documento) {
-		$this->documento = $documento;
-	}
-
-	function setActivo($activo) {
-		$this->activo = $activo;
-	}
-
-	function setNombre_usuario($nombre_usuario) {
-		$this->nombre_usuario = $nombre_usuario;
-	}
-
 
 }
