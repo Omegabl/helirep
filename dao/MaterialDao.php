@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 APRENDIZ.
+ * Copyright 2017 Depurador.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,27 +25,24 @@
  */
 
 /**
- * Description of UsuarioDao
+ * Description of MaterialDao
  *
- * @author APRENDIZ
+ * @author Depurador
  */
-class UsuarioDao {
-	public function registrarUsuario(UsuarioDto $usuarioDto){
+class MaterialDao {
+	public function registrarMaterial(MaterialDto $materialDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("INSERT INTO tbl_usuario VALUES ? ? ? ? ? ? ? ?");
+			$query = $cnn->prepare("INSERT INTO tbl_material VALUES ? ? ? ? ?");
 			$query.binndParam(1, null);
-			$query.binndParam(2, $usuarioDto->getFk_id_rol());
-			$query.binndParam(3, $usuarioDto->getNombre());
-			$query.binndParam(4, $usuarioDto->getApellido());
-			$query.binndParam(5, $usuarioDto->getContrasena());
-			$query.binndParam(6, $usuarioDto->getDocumento());
-			$query.binndParam(7, 1);
-			$query.binndParam(8, $usuarioDto->getNombre_usuario());
+			$query.binndParam(2, $materialDto->getFk_id_categoria());
+			$query.binndParam(3, $materialDto->getFk_id_proveedor());
+			$query.binndParam(4, $materialDto->getReferencia());
+			$query.binndParam(5, $materialDto->getDescripcion());
 			
 			$query->execute();
-			$mensaje="Usuario registrado";
+			$mensaje="Material registrado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -53,22 +50,19 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function modificarUsuario(UsuarioDto $usuarioDto){
+	public function modificarMaterial(MaterialDto $materialDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("UPDATE tbl_usuario SET fk_id_rol=?, nombre=?, apellido=?, contrasena=?, documento=?, activo=?, nombre_usuario=? WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getFk_id_rol());
-			$query.binndParam(2, $usuarioDto->getNombre());
-			$query.binndParam(3, $usuarioDto->getApellido());
-			$query.binndParam(4, $usuarioDto->getContrasena());
-			$query.binndParam(5, $usuarioDto->getDocumento());
-			$query.binndParam(6, $usuarioDto->getActivo());
-			$query.binndParam(7, $usuarioDto->getNombreUsuario());
-			$query.binndParam(8, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("UPDATE tbl_material SET fk_id_categoria=?, fk_id_proveedor=?, referencia=?, descripcion=? WHERE id_material=?");
+			$query.binndParam(1, $materialDto->getFk_id_categoria());
+			$query.binndParam(2, $materialDto->getFk_id_proveedor());
+			$query.binndParam(3, $materialDto->getReferencia());
+			$query.binndParam(4, $materialDto->getDescripcion());
+			$query.binndParam(5, $materialDto->getId_material());
 			
 			$query->execute();
-			$mensaje="Usuario actualizado";
+			$mensaje="Material actualizado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -76,12 +70,12 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function obtenerUsuario(UsuarioDto $usuarioDto){
+	public function obtenerMaterial(MaterialDto $materialDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("SELECT * FROM tbl_material WHERE id_material=?");
+			$query.binndParam(1, $materialDto->getId_material());
 			
 			$query->execute();
 			return $query->fetch();
@@ -92,15 +86,15 @@ class UsuarioDao {
 		$cnn=null;
 	}
 	
-	public function eliminarUsuario(UsuarioDto $usuarioDto){
+	public function eliminarMaterial(MaterialDto $materialDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("DELETE FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("DELETE FROM tbl_material WHERE id_material=?");
+			$query.binndParam(1, $materialDto->getId_material());
 			
 			$query->execute();
-			$mensaje="Usuario eliminado";
+			$mensaje="Material eliminado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -108,11 +102,11 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function listarUsuarios(UsuarioDto $usuarioDto){
+	public function listarMateriales(MaterialDto $materialDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario");
+			$query = $cnn->prepare("SELECT * FROM tbl_material");
 			
 			$query->execute();
 			return $query->fetchAll();

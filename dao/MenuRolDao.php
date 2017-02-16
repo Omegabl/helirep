@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 APRENDIZ.
+ * Copyright 2017 Depurador.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,27 +25,21 @@
  */
 
 /**
- * Description of UsuarioDao
+ * Description of MenuRolDao
  *
- * @author APRENDIZ
+ * @author Depurador
  */
-class UsuarioDao {
-	public function registrarUsuario(UsuarioDto $usuarioDto){
+class MenuRolDao {
+	public function registrarMenuRol(MenuRolDto $menuRolDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("INSERT INTO tbl_usuario VALUES ? ? ? ? ? ? ? ?");
-			$query.binndParam(1, null);
-			$query.binndParam(2, $usuarioDto->getFk_id_rol());
-			$query.binndParam(3, $usuarioDto->getNombre());
-			$query.binndParam(4, $usuarioDto->getApellido());
-			$query.binndParam(5, $usuarioDto->getContrasena());
-			$query.binndParam(6, $usuarioDto->getDocumento());
-			$query.binndParam(7, 1);
-			$query.binndParam(8, $usuarioDto->getNombre_usuario());
+			$query = $cnn->prepare("INSERT INTO tbl_menu_rol VALUES ? ?");
+			$query.binndParam(1, $menuRolDto->getFk_id_menu());
+			$query.binndParam(2, $menuRolDto->getFk_id_rol());
 			
 			$query->execute();
-			$mensaje="Usuario registrado";
+			$mensaje="Registrado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -53,22 +47,16 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function modificarUsuario(UsuarioDto $usuarioDto){
+	public function modificarMenuRol(MenuRolDto $menuRolDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("UPDATE tbl_usuario SET fk_id_rol=?, nombre=?, apellido=?, contrasena=?, documento=?, activo=?, nombre_usuario=? WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getFk_id_rol());
-			$query.binndParam(2, $usuarioDto->getNombre());
-			$query.binndParam(3, $usuarioDto->getApellido());
-			$query.binndParam(4, $usuarioDto->getContrasena());
-			$query.binndParam(5, $usuarioDto->getDocumento());
-			$query.binndParam(6, $usuarioDto->getActivo());
-			$query.binndParam(7, $usuarioDto->getNombreUsuario());
-			$query.binndParam(8, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("UPDATE fk_id_rol SET fk_id_rol=? WHERE fk_id_menu=?");
+			$query.binndParam(1, $menuRolDto->getFk_id_rol());
+			$query.binndParam(2, $menuRolDto->getFk_id_menu());
 			
 			$query->execute();
-			$mensaje="Usuario actualizado";
+			$mensaje="Actualizado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -76,12 +64,13 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function obtenerUsuario(UsuarioDto $usuarioDto){
+	public function obtenerMenuRol(MenuRolDto $menuRolDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("SELECT * FROM tbl_menu_rol WHERE fk_id_menu=? and fk_id_rol=?");
+			$query.binndParam(1, $menuRolDto->getFk_id_menu());
+			$query.binndParam(1, $menuRolDto->getFk_id_rol());
 			
 			$query->execute();
 			return $query->fetch();
@@ -92,15 +81,16 @@ class UsuarioDao {
 		$cnn=null;
 	}
 	
-	public function eliminarUsuario(UsuarioDto $usuarioDto){
+	public function eliminarMenuRol(MenuRolDto $menuRolDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("DELETE FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("DELETE FROM tbl_menu_rol WHERE fk_id_menu=? and fk_id_rol=?");
+			$query.binndParam(1, $menuRolDto->getFk_id_menu());
+			$query.binndParam(1, $menuRolDto->getFk_id_rol());
 			
 			$query->execute();
-			$mensaje="Usuario eliminado";
+			$mensaje="Eliminado";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -108,11 +98,11 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function listarUsuarios(UsuarioDto $usuarioDto){
+	public function listarMenuRol(MenuRolDto $menuRolDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario");
+			$query = $cnn->prepare("SELECT * FROM tbl_menu_rol");
 			
 			$query->execute();
 			return $query->fetchAll();

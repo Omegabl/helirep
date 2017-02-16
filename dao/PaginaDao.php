@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 APRENDIZ.
+ * Copyright 2017 Depurador.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,27 +25,23 @@
  */
 
 /**
- * Description of UsuarioDao
+ * Description of PaginaDao
  *
- * @author APRENDIZ
+ * @author Depurador
  */
-class UsuarioDao {
-	public function registrarUsuario(UsuarioDto $usuarioDto){
+class PaginaDao {
+	public function registrarPagina(PaginaDto $paginaDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("INSERT INTO tbl_usuario VALUES ? ? ? ? ? ? ? ?");
+			$query = $cnn->prepare("INSERT INTO tbl_pagina VALUES ? ? ? ?");
 			$query.binndParam(1, null);
-			$query.binndParam(2, $usuarioDto->getFk_id_rol());
-			$query.binndParam(3, $usuarioDto->getNombre());
-			$query.binndParam(4, $usuarioDto->getApellido());
-			$query.binndParam(5, $usuarioDto->getContrasena());
-			$query.binndParam(6, $usuarioDto->getDocumento());
-			$query.binndParam(7, 1);
-			$query.binndParam(8, $usuarioDto->getNombre_usuario());
+			$query.binndParam(2, $paginaDto->getFk_id_menu());
+			$query.binndParam(3, $paginaDto->getNombre());
+			$query.binndParam(4, $paginaDto->getUrl());
 			
 			$query->execute();
-			$mensaje="Usuario registrado";
+			$mensaje="Página registrada";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -53,22 +49,18 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function modificarUsuario(UsuarioDto $usuarioDto){
+	public function modificarPagina(PaginaDto $paginaDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("UPDATE tbl_usuario SET fk_id_rol=?, nombre=?, apellido=?, contrasena=?, documento=?, activo=?, nombre_usuario=? WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getFk_id_rol());
-			$query.binndParam(2, $usuarioDto->getNombre());
-			$query.binndParam(3, $usuarioDto->getApellido());
-			$query.binndParam(4, $usuarioDto->getContrasena());
-			$query.binndParam(5, $usuarioDto->getDocumento());
-			$query.binndParam(6, $usuarioDto->getActivo());
-			$query.binndParam(7, $usuarioDto->getNombreUsuario());
-			$query.binndParam(8, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("UPDATE tbl_pagina SET fk_id_menu=?, nombre=?, url=? WHERE id_pagina=?");
+			$query.binndParam(1, $paginaDto->getFk_id_menu());
+			$query.binndParam(2, $paginaDto->getNombre());
+			$query.binndParam(3, $paginaDto->getUrl());
+			$query.binndParam(4, $paginaDto->getId_pagina());
 			
 			$query->execute();
-			$mensaje="Usuario actualizado";
+			$mensaje="Página actualizada";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -76,12 +68,12 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function obtenerUsuario(UsuarioDto $usuarioDto){
+	public function obtenerPagina(PaginaDto $paginaDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("SELECT * FROM tbl_pagina WHERE id_pagina=?");
+			$query.binndParam(1, $paginaDto->getId_pagina());
 			
 			$query->execute();
 			return $query->fetch();
@@ -92,15 +84,15 @@ class UsuarioDao {
 		$cnn=null;
 	}
 	
-	public function eliminarUsuario(UsuarioDto $usuarioDto){
+	public function eliminarPagina(PaginaDto $paginaDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("DELETE FROM tbl_usuario WHERE id_usuario=?");
-			$query.binndParam(1, $usuarioDto->getIdUsuario());
+			$query = $cnn->prepare("DELETE FROM tbl_pagina WHERE id_pagina=?");
+			$query.binndParam(1, $paginaDto->getId_pagina());
 			
 			$query->execute();
-			$mensaje="Usuario eliminado";
+			$mensaje="Página eliminada";
 		} catch (Exception $ex) {
 			$mensaje=$ex->getMessage();
 		}
@@ -108,11 +100,11 @@ class UsuarioDao {
 		return $mensaje;
 	}
 	
-	public function listarUsuarios(UsuarioDto $usuarioDto){
+	public function listarPaginas(PaginaDto $paginaDto){
 		$cnn = conexion::getConexion();
 		$mensaje="";
 		try {
-			$query = $cnn->prepare("SELECT * FROM tbl_usuario");
+			$query = $cnn->prepare("SELECT * FROM tbl_pagina");
 			
 			$query->execute();
 			return $query->fetchAll();
